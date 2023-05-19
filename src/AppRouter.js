@@ -8,7 +8,7 @@ import Body from './components/body';
 import Footer from './components/footer';
 import './App.js';
 import MenuComponent from './components/menu';
-import ExampleCard from './components/card'
+
 
 
 
@@ -23,7 +23,6 @@ function AppRouter() {
         <Route exact path="/species" component={SpeciesPage} />
         <Route component={NotFoundPage} />
       </Routes>
-      <ExampleCard/>
       <Footer />
     </Router>
   );
