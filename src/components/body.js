@@ -1,7 +1,7 @@
 import React from 'react';
 import './estilo.css';
 import myImage from './logo.png';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
 
 function Body() {
   const data = [
@@ -11,32 +11,21 @@ function Body() {
     // Agrega más datos según sea necesario
   ];
 
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'name', headerName: 'NOMBRE', width: 200 },
+    { field: 'category', headerName: 'CATEGORIA', width: 200 },
+  ];
+
   return (
-    <div className="body">
+    <div className="body" style={{ marginTop: '100px' }}>
       <h1>AMAZONÍA</h1>
       <p>GUIA ILUSTRADA DE FLORA Y FAUNA</p>
-      <img src={myImage} width={150} height={150}/>
+      <img src={myImage} width={150} height={150} alt="Logo de Amazonía" />
       
-      <TableContainer component={Paper} style={{ maxHeight: '1500px', overflow: 'auto' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>NOMBRE</TableCell>
-              <TableCell>CATEGORIA</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.category}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{ height: 500, width: '100%', marginTop: '20px'}}>
+        <DataGrid rows={data} columns={columns} pageSize={10} />
+      </div>
     </div>
   );
 }
