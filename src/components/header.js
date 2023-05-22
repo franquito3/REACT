@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './estilo.css';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import myImage from './logo.png';
+import myImaage from './splash.png';
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,16 +16,19 @@ function Header() {
   };
 
   return (
-    <header style={{ height: '60px', padding: '10px' }}>
+    <header className="header">
       <nav>
-        <ul style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h1 style={{ color: '#ffffff', fontSize: '24px', margin: 0 }}>AMAZONÍA</h1>
+        <ul className="header-content">
+          <div className="logo-container">
+            <img src={myImage} width={70} height={70} alt="Logo de Amazonía" style={{ marginLeft: '-30px' }}/>
+            <img src={myImaage} width={200} height={70} alt="Logo de Amazonía" />
+          </div>
           <TextField
             label="Buscar"
             variant="outlined"
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ backgroundColor: '#FFFFFF', marginLeft: '10px' }}
+            style={{ backgroundColor: '#FFFFFF', marginRight: '50px' }}
           />
         </ul>
       </nav>

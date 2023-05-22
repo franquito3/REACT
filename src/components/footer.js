@@ -1,14 +1,1 @@
-import React from 'react';
-import './estilo.css';
-
-function Footer() {
-  return (
-    <div className="footer-container">
-    <p className="footer-text">www.iiap.gob.pe<br/>
-Desarrollado por Grupo Bioinfo-IIAP<br/>
-Creditos</p>
-  </div>
-);
-}
-
-export default Footer;
+import React from'react';import'./estilo.css';import Button from'@mui/material/Button';function Footer(){return(React.createElement("div",{className:"footer-container"},React.createElement("h1",{className:"footer-text",style:{textAlign:'left'}},React.createElement("span",null,"www.iiap.gob.pe"),React.createElement("br",null),React.createElement("span",null,"DESARROLLADO POR: FRANCO S."),React.createElement("br",null),"Creditos"),React.createElement(Button,{variant:"contained",style:{marginLeft:'auto',backgroundColor:'rgb(39, 174, 160)',color:'#FFFFFF'}},React.createElement("span",null,"INGRESAR"))))}export default Footer;
