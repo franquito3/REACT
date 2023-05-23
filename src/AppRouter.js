@@ -14,8 +14,8 @@ function AppRouter() {
   return (
     <Router>
       <Header />
-      <MenuComponent setSelectedApi={setSelectedApi} />
-      <Body selectedApi={selectedApi} />
+      <MenuComponent onApiChange={setSelectedApi} />
+      <Body selectedApi={selectedApi} setSelectedApi={setSelectedApi} />
       <Routes>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/species" component={SpeciesPage} />

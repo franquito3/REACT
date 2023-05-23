@@ -111,3 +111,20 @@ nav ul li a:hover {
   margin-top: auto;
 }
 
+.menu-container {
+  background-color: #3b5998;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes raindrop {
+  0% {
+    top: -10px;
+    opacity: 0;
+  }
+  100% {
+    top: 100%;
+    opacity: 1;
+  }
+}
+

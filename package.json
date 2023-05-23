@@ -19,6 +19,8 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "react-slide-menu": "^0.5.1",
+    "react-spring": "^9.7.1",
+    "react-transition-group": "^4.4.5",
     "router-dom": "^2.2.11",
     "web-vitals": "^2.1.4"
   },

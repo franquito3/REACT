@@ -10,9 +10,6 @@ function Header() {
   const handleSearchChange = (event) => {
     const { value } = event.target;
     setSearchTerm(value);
-    // Aquí puedes realizar las acciones de búsqueda según el término actualizado
-    // por ejemplo, llamar a una función para filtrar los resultados en el cuerpo de la página.
-    // onSearch(value);
   };
 
   return (

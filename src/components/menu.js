@@ -4,72 +4,263 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
-import { Link } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 
-function MenuComponent({ onApiChange }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showMenuIcon, setShowMenuIcon] = useState(window.innerWidth <= 750);
+const MenuComponent = ({ onApiChange }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const handleOpen = () => {
-    setIsOpen(true);
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setDrawerOpen(false);
   };
 
-  window.addEventListener('resize', () => {
-    setShowMenuIcon(window.innerWidth <= 750);
-  });
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
-  const handleApiChange = (apiType) => {
+  const handleButtonClick = (apiType) => {
     onApiChange(apiType);
-    handleClose();
+    handleMenuClose();
   };
+
+  const getButtonIcon = (apiType) => {
+    switch (apiType) {
+      case 1:
+        return <BirdIcon />;
+      case 2:
+        return <MammalIcon />;
+      case 3:
+        return <ReptileIcon />;
+      case 4:
+        return <AmphibianIcon />;
+      case 5:
+        return <FishIcon />;
+      case 6:
+        return <InsectIcon />;
+      case 7:
+        return <TreeIcon />;
+      case 8:
+        return <PalmTreeIcon />;
+      default:
+        return null;
+    }
+  };
+
+  const BirdIcon = () => <span>🐦</span>; // Ejemplo de icono personalizado
+  const MammalIcon = () => <span>🦔</span>; // Ejemplo de icono personalizado
+  const ReptileIcon = () => <span>🐍</span>; // Ejemplo de icono personalizado
+  const AmphibianIcon = () => <span>🐸</span>; // Ejemplo de icono personalizado
+  const FishIcon = () => <span>🐠</span>; // Ejemplo de icono personalizado
+  const InsectIcon = () => <span>🐞</span>; // Ejemplo de icono personalizado
+  const TreeIcon = () => <span>🌳</span>; // Ejemplo de icono personalizado
+  const PalmTreeIcon = () => <span>🌴</span>; // Ejemplo de icono personalizado
+
+  const handleFullScreenChange = () => {
+    const isFullScreen =
+      document.fullscreenElement ||
+      document.mozFullScreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement;
+    setIsFullScreen(!!isFullScreen);
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('fullscreenchange', handleFullScreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullScreenChange);
+    document.addEventListener(
+      'webkitfullscreenchange',
+      handleFullScreenChange
+    );
+    document.addEventListener('msfullscreenchange', handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener(
+        'fullscreenchange',
+        handleFullScreenChange
+      );
+      document.removeEventListener(
+        'mozfullscreenchange',
+        handleFullScreenChange
+      );
+      document.removeEventListener(
+        'webkitfullscreenchange',
+        handleFullScreenChange
+      );
+      document.removeEventListener(
+        'msfullscreenchange',
+        handleFullScreenChange
+      );
+    };
+  }, []);
 
   return (
-    <>
-      <Toolbar
-        sx={{
-          backgroundColor: '#8b0000',
-          justifyContent: 'flex-start',
-          marginTop: showMenuIcon ? '90px' : '0', // Ajustar el margen superior según showMenuIcon
-          zIndex: 1000,
-        }}
-      >
-        {showMenuIcon && (
+    <div style={{ marginTop: '80px' }}>
+      <Toolbar>
+        {!isFullScreen && (
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            onClick={handleOpen}
-            sx={{ marginRight: 'auto' }}
+            onClick={handleDrawerToggle}
+            style={{ marginRight: '10px' }}
+            sx={{
+              display: { xs: 'block', md: 'none' },
+              '&:hover': {
+                transform: 'rotate(360deg)',
+                transition: 'transform 0.8s ease',
+              },
+            }}
           >
             <MenuIcon />
           </IconButton>
         )}
-      </Toolbar>
-      <Drawer anchor="left" open={isOpen} onClose={handleClose}>
-        <div role="presentation" onClick={handleClose} onKeyDown={handleClose}>
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          PaperProps={{
+            style: {
+              width: '200px',
+            },
+          }}
+          sx={{
+            '@media (max-width: 750px)': {
+              display: isFullScreen ? 'none' : 'block',
+            },
+          }}
+        >
+          <Stack
+            spacing={2}
+            justifyContent="left"
+            sx={{
+              marginTop: '130px',
+              '.MuiButton-root': {
+                color: 'black',
+                textAlign: 'left',
+              },
+            }}
+          >
+            <Button
+              startIcon={getButtonIcon(1)}
+              onClick={() => handleButtonClick(1)}
+            >
+              Aves
+            </Button>
+            <Button
+              startIcon={getButtonIcon(2)}
+              onClick={() => handleButtonClick(2)}
+            >
+              Mamíferos
+            </Button>
+            <Button
+              startIcon={getButtonIcon(3)}
+              onClick={() => handleButtonClick(3)}
+            >
+              Reptiles
+            </Button>
+            <Button
+              startIcon={getButtonIcon(4)}
+              onClick={() => handleButtonClick(4)}
+            >
+              Anfibios
+            </Button>
+            <Button
+              startIcon={getButtonIcon(5)}
+              onClick={() => handleButtonClick(5)}
+            >
+              Peces
+            </Button>
+            <Button
+              startIcon={getButtonIcon(6)}
+              onClick={() => handleButtonClick(6)}
+            >
+              Insectos
+            </Button>
+            <Button
+              startIcon={getButtonIcon(7)}
+              onClick={() => handleButtonClick(7)}
+            >
+              Árboles
+            </Button>
+            <Button
+              startIcon={getButtonIcon(8)}
+              onClick={() => handleButtonClick(8)}
+            >
+              Palmeras
+            </Button>
+          </Stack>
+        </Drawer>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="left"
+          alignItems="center"
+          sx={{
+            display: { xs: 'none', md: 'flex', '.MuiButton-root': {
+              color: 'black',
+              textAlign: 'left',
+            },},
+            marginLeft: '15%',
+          }}
+        >
           <Button
-            component={Link}
-            to="/"
-            fullWidth
-            sx={{ marginTop: '100px', paddingTop: '70px' }}
+            startIcon={getButtonIcon(1)}
+            onClick={() => handleButtonClick(1)}
           >
             Aves
           </Button>
-          <Button fullWidth sx={{ paddingTop: '13px' }} onClick={() => handleApiChange(1)}>
+          <Button
+            startIcon={getButtonIcon(2)}
+            onClick={() => handleButtonClick(2)}
+          >
             Mamíferos
           </Button>
-          <Button fullWidth sx={{ paddingTop: '13px' }} onClick={() => handleApiChange(2)}>
+          <Button
+            startIcon={getButtonIcon(3)}
+            onClick={() => handleButtonClick(3)}
+          >
             Reptiles
           </Button>
-          {/* Agrega aquí más botones para otros tipos */}
-        </div>
-      </Drawer>
-    </>
+          <Button
+            startIcon={getButtonIcon(4)}
+            onClick={() => handleButtonClick(4)}
+          >
+            Anfibios
+          </Button>
+          <Button
+            startIcon={getButtonIcon(5)}
+            onClick={() => handleButtonClick(5)}
+          >
+            Peces
+          </Button>
+          <Button
+            startIcon={getButtonIcon(6)}
+            onClick={() => handleButtonClick(6)}
+          >
+            Insectos
+          </Button>
+          <Button
+            startIcon={getButtonIcon(7)}
+            onClick={() => handleButtonClick(7)}
+          >
+            Árboles
+          </Button>
+          <Button
+            startIcon={getButtonIcon(8)}
+            onClick={() => handleButtonClick(8)}
+          >
+            Palmeras
+          </Button>
+        </Stack>
+      </Toolbar>
+    </div>
   );
-}
+};
 
 export default MenuComponent;
