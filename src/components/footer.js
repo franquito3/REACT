@@ -42,7 +42,7 @@ function Footer() {
       </h1>
       <Button
         variant="contained"
-        style={{ marginLeft: 'auto', backgroundColor: 'rgb(39, 174, 160)', color: '#FFFFFF' }}
+        style={{ marginLeft: 'auto', backgroundColor: 'rgb(0, 134, 183)', color: '#FFFFFF' }}
         onClick={handleOpen}
       >
         <span>INGRESAR</span>
@@ -93,7 +93,7 @@ function Footer() {
               fullWidth
               margin="normal"
             />
-            <Button style={{backgroundColor: 'rgb(39, 174, 160)'}} variant="contained" onClick={handleLogin}>
+            <Button style={{backgroundColor: 'rgb(0, 134, 183)'}} variant="contained" onClick={handleLogin}>
               Iniciar sesión
             </Button>
           </Typography>

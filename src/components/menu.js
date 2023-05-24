@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
+import './estilo.css';
 
 const MenuComponent = ({ onApiChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [activeButton, setActiveButton] = useState(1); // Estado para guardar el botón activo
+
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +29,7 @@ const MenuComponent = ({ onApiChange }) => {
 
   const handleButtonClick = (apiType) => {
     onApiChange(apiType);
+    setActiveButton(apiType);
     handleMenuClose();
   };
 
@@ -70,7 +74,7 @@ const MenuComponent = ({ onApiChange }) => {
     setIsFullScreen(!!isFullScreen);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('fullscreenchange', handleFullScreenChange);
     document.addEventListener('mozfullscreenchange', handleFullScreenChange);
     document.addEventListener(
@@ -98,6 +102,20 @@ const MenuComponent = ({ onApiChange }) => {
       );
     };
   }, []);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (drawerOpen && window.innerWidth >= 750) {
+        setDrawerOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, [drawerOpen]);
 
   return (
     <div style={{ marginTop: '80px' }}>
@@ -130,7 +148,7 @@ const MenuComponent = ({ onApiChange }) => {
             },
           }}
           sx={{
-            '@media (max-width: 750px)': {
+            '@media (max-width: 750)': {
               display: isFullScreen ? 'none' : 'block',
             },
           }}
@@ -147,48 +165,56 @@ const MenuComponent = ({ onApiChange }) => {
             }}
           >
             <Button
+            className={activeButton === 1 ? 'active-button' : ''}
               startIcon={getButtonIcon(1)}
               onClick={() => handleButtonClick(1)}
             >
               Aves
             </Button>
             <Button
+            className={activeButton === 2 ? 'active-button' : ''}
               startIcon={getButtonIcon(2)}
               onClick={() => handleButtonClick(2)}
             >
               Mamíferos
             </Button>
             <Button
+            className={activeButton === 3 ? 'active-button' : ''}
               startIcon={getButtonIcon(3)}
               onClick={() => handleButtonClick(3)}
             >
               Reptiles
             </Button>
             <Button
+            className={activeButton === 4 ? 'active-button' : ''}
               startIcon={getButtonIcon(4)}
               onClick={() => handleButtonClick(4)}
             >
               Anfibios
             </Button>
             <Button
+            className={activeButton === 5 ? 'active-button' : ''}
               startIcon={getButtonIcon(5)}
               onClick={() => handleButtonClick(5)}
             >
               Peces
             </Button>
             <Button
+            className={activeButton === 6 ? 'active-button' : ''}
               startIcon={getButtonIcon(6)}
               onClick={() => handleButtonClick(6)}
             >
               Insectos
             </Button>
             <Button
+            className={activeButton === 7 ? 'active-button' : ''}
               startIcon={getButtonIcon(7)}
               onClick={() => handleButtonClick(7)}
             >
               Árboles
             </Button>
             <Button
+            className={activeButton === 8 ? 'active-button' : ''}
               startIcon={getButtonIcon(8)}
               onClick={() => handleButtonClick(8)}
             >
@@ -198,60 +224,71 @@ const MenuComponent = ({ onApiChange }) => {
         </Drawer>
         <Stack
           direction="row"
-          spacing={2}
+          spacing={{ xs: 1, sm: 2, md: -1, lg: 7 }}
           justifyContent="left"
           alignItems="center"
           sx={{
-            display: { xs: 'none', md: 'flex', '.MuiButton-root': {
+            width:'auto',
+            display: { '.MuiButton-root': {
               color: 'black',
               textAlign: 'left',
-            },},
-            marginLeft: '15%',
+            },xs: 'none', md: 'flex' },
+            marginLeft: 'auto',
+            marginRight:'auto',
           }}
         >
           <Button
+          className={activeButton === 1 ? 'active-button' : ''} // Agrega la clase CSS al botón activ
             startIcon={getButtonIcon(1)}
             onClick={() => handleButtonClick(1)}
           >
             Aves
           </Button>
           <Button
+            className={activeButton === 2 ? 'active-button' : ''}
             startIcon={getButtonIcon(2)}
             onClick={() => handleButtonClick(2)}
+            
           >
             Mamíferos
           </Button>
           <Button
+          className={activeButton === 3 ? 'active-button' : ''}
             startIcon={getButtonIcon(3)}
             onClick={() => handleButtonClick(3)}
           >
             Reptiles
           </Button>
-          <Button
+          <Button 
+          className={activeButton === 4 ? 'active-button' : ''}
             startIcon={getButtonIcon(4)}
             onClick={() => handleButtonClick(4)}
           >
             Anfibios
           </Button>
           <Button
+          className={activeButton === 5 ? 'active-button' : ''}
             startIcon={getButtonIcon(5)}
             onClick={() => handleButtonClick(5)}
           >
             Peces
           </Button>
           <Button
+          className={activeButton === 6 ? 'active-button' : ''}
             startIcon={getButtonIcon(6)}
             onClick={() => handleButtonClick(6)}
           >
             Insectos
           </Button>
           <Button
+          className={activeButton === 7 ? 'active-button' : ''}
             startIcon={getButtonIcon(7)}
             onClick={() => handleButtonClick(7)}
           >
             Árboles
           </Button>
           <Button
+          className={activeButton === 8 ? 'active-button' : ''}
             startIcon={getButtonIcon(8)}
             onClick={() => handleButtonClick(8)}
           >

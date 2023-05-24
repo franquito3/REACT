@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './estilo.css';
-import { Card, CardContent, Typography, Grid, Modal, Box, CircularProgress, useMediaQuery, Button } from '@mui/material';
-
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Modal,
+  Box,
+  useMediaQuery,
+  Button,
+  CircularProgress,
+} from '@mui/material';
 
 function Body({ selectedApi }) {
   const [data, setData] = useState([]);
@@ -15,8 +24,8 @@ function Body({ selectedApi }) {
     setIsLoading(true); // Mostrar preloader al cargar los datos
 
     fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setData(data.especies);
         setIsLoading(false); // Ocultar preloader al completar la carga de datos
       });
@@ -30,47 +39,103 @@ function Body({ selectedApi }) {
     setSelectedCard(null);
   };
 
-  const handleShowMoreData = () => {
-    setStartIndex(prevIndex => prevIndex + 20);
+  const handlePageChange = (newIndex) => {
+    setStartIndex(newIndex);
   };
 
-  const visibleData = data.slice(startIndex, startIndex + 12);
+  const cardsPerPage = 12;
+  const totalPages = Math.ceil(data.length / cardsPerPage);
+
+  const renderPageButton = (pageIndex) => {
+    return (
+      <Button
+        key={pageIndex}
+        variant={startIndex / cardsPerPage === pageIndex ? 'contained' : 'outlined'}
+        color="primary"
+        onClick={() => handlePageChange(pageIndex * cardsPerPage)}
+        style={{ backgroundColor: 'rgb(0, 134, 183)', marginRight: '5px' }}
+      >
+        {pageIndex + 1}
+      </Button>
+    );
+  };
+
+  const renderPaginationButtons = () => {
+    const currentPage = Math.floor(startIndex / cardsPerPage);
+    const visiblePages = [];
+
+    if (currentPage < 2) {
+      for (let i = 0; i < 3; i++) {
+        visiblePages.push(renderPageButton(i));
+      }
+    } else {
+      visiblePages.push(renderPageButton(currentPage - 1));
+      visiblePages.push(renderPageButton(currentPage));
+      visiblePages.push(renderPageButton(currentPage + 1));
+    }
+
+    if (currentPage < totalPages - 1) {
+      visiblePages.push(
+        
+      );
+    }
+
+    return visiblePages;
+  };
+
+  const renderCards = () => {
+    if (isLoading) {
+      return Array.from({ length: cardsPerPage }, (_, index) => (
+        <Grid item xs={12} sm={6} md={4} key={index}>
+          <Card className="card skeleton-card">
+            <CardContent className="skeleton-content">
+              <div className="skeleton-thumbnail"></div>
+              <div className="skeleton-title"></div>
+              <div className="skeleton-subtitle"></div>
+            </CardContent>
+          </Card>
+        </Grid>
+      ));
+    }
+
+    const visibleData = data.slice(startIndex, startIndex + cardsPerPage);
+
+    return visibleData.map((item, index) => (
+      <Grid item xs={12} sm={6} md={4} key={item.id}>
+        <Card
+          className={`card ${selectedCard === index ? 'selected' : ''}`}
+          style={{ borderRadius: '15px', width: '100%' }}
+          onClick={() => handleCardClick(index)}
+        >
+          <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={`http://amazonia.iiap.org.pe/data/especie_img_high/${item.imagen}`}
+              alt="Imagen de especie"
+              width={150}
+              height={200}
+            />
+            <Typography variant="h5" component="div">
+              {item.nombre}
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              {item.ncientifico}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    ));
+  };
 
   return (
-    <div className="body" style={{ marginTop: '70px', minHeight: 'calc(100vh - 100px)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      {isLoading ? (
-        // Mostrar preloader mientras se cargan los datos
-        <CircularProgress style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)' }} />
-      ) : (
-        <>
-          <Grid container spacing={2} style={{ marginTop: '-100px', width: '80%' }}>
-            {visibleData.map((item, index) => (
-              <Grid item xs={12} sm={6} md={4} key={item.id}>
-                <Card
-                  className={`card ${selectedCard === index ? 'selected' : ''}`}
-                  style={{ borderRadius:'15px', width: '100%' }}
-                  onClick={() => handleCardClick(index)}
-                >
-                  <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <img src={`http://amazonia.iiap.org.pe/data/especie_img_high/${item.imagen}`} alt="Imagen de especie" width={150} height={200} />
-                    <Typography variant="h5" component="div">
-                      {item.nombre}
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      {item.ncientifico}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+    <div className="body" style={{ marginTop: '70px', minHeight: 'calc(100vh - 100px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <Grid container spacing={2} style={{ marginTop: '-100px', width: '80%' }}>
+        {renderCards()}
+      </Grid>
 
-          {startIndex + 20 < data.length && (
-            <Button variant="contained" color="primary" onClick={handleShowMoreData} style={{ marginTop: '20px', }}>
-              Mostrar más datos
-            </Button>
-          )}
-        </>
+      {totalPages > 1 && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          {renderPaginationButtons()}
+        </Box>
       )}
 
       <Modal
@@ -112,10 +177,7 @@ function Body({ selectedApi }) {
                 {data[selectedCard].ncientifico}
               </Typography>
               <Typography variant="body1" color="textSecondary" id="modal-description">
-                <audio controls>
-                  <source src={data[selectedCard].sonido} type="audio/mp3,wav,ogg" />
-                  Tu navegador no admite la reproducción de audio.
-                </audio>
+                
               </Typography>
 
               {/* Agrega aquí el contenido adicional que deseas mostrar en el modal */}
