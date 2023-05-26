@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/REACT/static/css/main.51b707d4.css",
+    "main.js": "/REACT/static/js/main.15b6ec42.js",
+    "static/js/787.e4875cae.chunk.js": "/REACT/static/js/787.e4875cae.chunk.js",
+    "static/media/heder.png": "/REACT/static/media/heder.500a600955efc729ba25.png",
+    "static/media/logo.png": "/REACT/static/media/logo.a9f14b42f0ed86fc8056.png",
+    "static/media/splash.png": "/REACT/static/media/splash.8bf99ca64ac1d6fc5833.png",
+    "index.html": "/REACT/index.html",
+    "main.51b707d4.css.map": "/REACT/static/css/main.51b707d4.css.map",
+    "main.15b6ec42.js.map": "/REACT/static/js/main.15b6ec42.js.map",
+    "787.e4875cae.chunk.js.map": "/REACT/static/js/787.e4875cae.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.51b707d4.css",
+    "static/js/main.15b6ec42.js"
+  ]
+}
