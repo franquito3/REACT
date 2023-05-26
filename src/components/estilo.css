@@ -9,6 +9,79 @@ body {
   margin: 0;
   padding: 0;
 }
+.rain {
+  width: 27%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+@media (max-width: 450px) {
+  .rain {
+    width: 55%;
+  }
+}
+.drop {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background-color: #9fd1ff;
+  animation: raindrop 4s linear infinite;
+}
+
+
+@keyframes raindrop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+
+  }
+}
+
+@keyframes expandWidth {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.rain .drop:nth-child(1) {
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.rain .drop:nth-child(2) {
+  left: 25%;
+  animation-delay: 1.5s;
+}
+
+.rain .drop:nth-child(3) {
+  left: 45%;
+  animation-delay: 2.5s;
+}
+
+.rain .drop:nth-child(4) {
+  left: 65%;
+  animation-delay: 0.5s;
+}
+
+.rain .drop:nth-child(5) {
+  left: 85%;
+  animation-delay: 2s;
+}
+
 
 /* Estilos del header */
 header {
@@ -115,22 +188,14 @@ nav ul li a:hover {
   margin-top: auto;
 }
 
+
+
 .menu-container {
   background-color: #3b5998;
   position: relative;
   overflow: hidden;
 }
 
-@keyframes raindrop {
-  0% {
-    top: -10px;
-    opacity: 0;
-  }
-  100% {
-    top: 100%;
-    opacity: 1;
-  }
-}
 
 .skeleton-card {
   background-color: #f5f5f5;

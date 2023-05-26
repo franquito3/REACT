@@ -4,12 +4,18 @@ import TextField from '@mui/material/TextField';
 import myImage from './logo.png';
 import myImaage from './splash.png';
 
-function Header() {
+function Header({ onSearchSubmit }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchChange = (event) => {
     const { value } = event.target;
     setSearchTerm(value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    if (event.key === 'Enter') {
+      onSearchSubmit(searchTerm);
+    }
   };
 
   return (
@@ -25,6 +31,7 @@ function Header() {
             variant="outlined"
             value={searchTerm}
             onChange={handleSearchChange}
+            onKeyPress={handleSearchSubmit}
             style={{ backgroundColor: '#FFFFFF', marginRight: '50px' }}
           />
         </ul>

@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-function Body({ selectedApi }) {
+function Body({ selectedApi, searchTerm }) {
   const [data, setData] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -98,7 +98,13 @@ function Body({ selectedApi }) {
       ));
     }
 
-    const visibleData = data.slice(startIndex, startIndex + cardsPerPage);
+    let visibleData = data.slice(startIndex, startIndex + cardsPerPage);
+
+    if (searchTerm) {
+      visibleData = visibleData.filter((item) =>
+        item.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
     return visibleData.map((item, index) => (
       <Grid item xs={12} sm={6} md={4} key={item.id}>

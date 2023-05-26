@@ -118,7 +118,8 @@ const MenuComponent = ({ onApiChange }) => {
   }, [drawerOpen]);
 
   return (
-    <div style={{ marginTop: '80px' }}>
+    <div  style={{ marginTop: '80px' }}>
+      
       <Toolbar>
         {!isFullScreen && (
           <IconButton
@@ -154,6 +155,7 @@ const MenuComponent = ({ onApiChange }) => {
           }}
         >
           <Stack
+          
             spacing={2}
             justifyContent="left"
             sx={{
@@ -164,6 +166,13 @@ const MenuComponent = ({ onApiChange }) => {
               },
             }}
           >
+            <div class="rain">
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+      </div>
             <Button
             className={activeButton === 1 ? 'active-button' : ''}
               startIcon={getButtonIcon(1)}
