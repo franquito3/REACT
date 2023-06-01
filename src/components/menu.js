@@ -8,15 +8,11 @@ import Stack from '@mui/material/Stack';
 import './estilo.css';
 
 const MenuComponent = ({ onApiChange }) => {
+  // eslint-disable-next-line
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [activeButton, setActiveButton] = useState(1); // Estado para guardar el botón activo
-
-
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
