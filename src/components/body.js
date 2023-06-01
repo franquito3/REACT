@@ -9,7 +9,6 @@ import {
   Box,
   useMediaQuery,
   Button,
-  CircularProgress,
 } from '@mui/material';
 
 function Body({ selectedApi, searchTerm }) {
